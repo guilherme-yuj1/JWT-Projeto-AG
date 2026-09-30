@@ -2,6 +2,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 from models.user_model import UserModel
 
+
 class UserController:
     @staticmethod
     def register_user(data):
@@ -32,3 +33,35 @@ class UserController:
             return {"access_token": access_token}, 200
 
         return {"error": "Nome de usuário ou senha inválidos."}, 401
+
+    @staticmethod
+    def get_user(user_id):
+        user = UserModel.find_by_id(user_id)
+        if not user:
+            return {"error": "Usuário não encontrado."}, 404
+
+        return {"id": user['id'], "username": user['username']}, 200
+
+    @staticmethod
+    def update_user(user_id, data):
+        username = data.get('username')
+        if not username:
+            return {"error": "Nome de usuário é obrigatório."}, 400
+
+        if not UserModel.find_by_id(user_id):
+            return {"error": "Usuário não encontrado."}, 404
+
+        if UserModel.update_user(user_id, username):
+            return {"message": "Usuário atualizado com sucesso."}, 200
+
+        return {"error": "Nome de usuário já existe."}, 409
+
+    @staticmethod
+    def delete_user(user_id):
+        if not UserModel.find_by_id(user_id):
+            return {"error": "Usuário não encontrado."}, 404
+
+        if UserModel.delete_user(user_id):
+            return {"message": "Usuário deletado com sucesso."}, 200
+
+        return {"error": "Erro ao deletar usuário."}, 500
