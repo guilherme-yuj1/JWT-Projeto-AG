@@ -1,4 +1,4 @@
-from models.formulario_model import formularioModel
+from models.FormularioModel import FormularioModel
 
 class FormularioController:
 

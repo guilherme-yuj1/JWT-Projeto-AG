@@ -2,7 +2,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 from models.user_model import UserModel
 
-class UserControllers:
+class UserController:
 
     @staticmethod
     def register_user(data):

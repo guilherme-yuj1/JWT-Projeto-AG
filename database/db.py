@@ -25,6 +25,5 @@ def init_db():
         genero TEXT NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users (id)
     )''')
-
-conn.commit()
-conn.close()
+    conn.commit()
+    conn.close()
