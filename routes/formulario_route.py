@@ -17,6 +17,15 @@ def update_formulario(formulario_id):
     user_id = get_jwt_identity()
     return jsonify(FormularioController.update_formulario(user_id, formulario_id, request.get.json()))
 
+@formulario_bp.route('/formulario', methods=['GET'])
+def get_formulario():
+    return get_formularios()
+
+
+@user_routes.route('/User/<int:user_id>', methods=['GET'])
+def get_formulario_by_id(formulario_id):
+    return formulario_by_id(formulario_id)
+
 
 @formulario_bp.route('/<int:formulario_id>', methods=[DELETE])
 @jwt_required()
